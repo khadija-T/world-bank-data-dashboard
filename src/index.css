@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@layer components {
+  .container {
+    padding: "1.25rem";
+  }
+}
