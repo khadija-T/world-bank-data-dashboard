@@ -24,24 +24,27 @@ function App() {
     yearRange[1]
   );
 
+  const selectedCountryName =
+    countryList?.find((c) => c.id === countries[0]?.value)?.name || "...";
+
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 font-sans p-4 sm:p-6 md:p-8">
+    <div className="min-h-screen bg-gray-900 text-gray-100 font-sans p-2 sm:p-4 md:p-6 lg:p-8">
       <main className="max-w-5xl mx-auto">
-        <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
+        <header className="text-center mb-4 sm:mb-6">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
             World Bank Data Dashboard
           </h1>
-          <p className="text-lg text-gray-400">
-            Visualizing Development Indicators
+          <p className="text-lg sm:text-xl text-gray-400">
+            Visualizing Development Indicators for {selectedCountryName}
           </p>
         </header>
 
-        <section className="bg-gray-800 p-6 rounded-lg shadow-lg">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-6">
+        <section className="bg-gray-800 p-2 sm:p-4 rounded-lg shadow-lg">
+          <div className="grid grid-cols-1 gap-4 mb-4">
             <div>
               <label
                 htmlFor="country-select"
-                className="block mb-2 text-sm font-medium text-gray-300"
+                className="block mb-1 text-sm font-medium text-gray-300"
               >
                 Select Countries:
               </label>
@@ -54,15 +57,30 @@ function App() {
                 value={countries}
                 onChange={setCountries}
                 isDisabled={countriesLoading}
-                className="basic-multi-select text-black"
+                className="basic-multi-select w-full text-gray-700"
                 classNamePrefix="select"
+                styles={{
+                  menu: (provided) => ({
+                    ...provided,
+                    zIndex: 1000, // Ensure dropdown appears above other elements
+                  }),
+                  control: (provided) => ({
+                    ...provided,
+                    minHeight: "38px", // Adjust height for mobile
+                    fontSize: "14px", // Smaller text for mobile
+                  }),
+                  multiValue: (provided) => ({
+                    ...provided,
+                    fontSize: "12px", // Smaller tags for mobile
+                  }),
+                }}
               />
             </div>
 
             <div>
               <label
                 htmlFor="indicator-select"
-                className="block mb-2 text-sm font-medium text-gray-300"
+                className="block mb-1 text-sm font-medium text-gray-300"
               >
                 Select an Indicator:
               </label>
@@ -70,7 +88,7 @@ function App() {
                 id="indicator-select"
                 value={indicator}
                 onChange={(e) => setIndicator(e.target.value)}
-                className="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
+                className="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2"
               >
                 {Object.entries(indicators).map(([code, name]) => (
                   <option key={code} value={code}>
@@ -80,8 +98,8 @@ function App() {
               </select>
             </div>
 
-            <div className="col-span-2">
-              <label className="block mb-2 text-sm font-medium text-gray-300">
+            <div className="col-span-1">
+              <label className="block mb-1 text-sm font-medium text-gray-300">
                 Select Year Range:
               </label>
               <Slider
@@ -91,11 +109,19 @@ function App() {
                 value={yearRange}
                 onChange={setYearRange}
                 className="w-full"
+                trackStyle={{ backgroundColor: "#48bb78", height: "6px" }}
+                handleStyle={{
+                  borderColor: "#48bb78",
+                  height: "16px",
+                  width: "16px",
+                  marginTop: "-5px",
+                }}
+                railStyle={{ backgroundColor: "#4a5568", height: "6px" }}
               />
             </div>
           </div>
 
-          <div className="h-[300px] sm:h-[400px]">
+          <div className="h-[250px] sm:h-[300px] md:h-[400px]">
             {isLoading && (
               <div className="flex items-center justify-center h-full">
                 <p className="text-xl text-gray-400">Loading Chart...</p>
