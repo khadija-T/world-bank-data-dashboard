@@ -1,5 +1,7 @@
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 import { useState } from "react";
-// Import the new hook and the updated indicators list
+import Select from "react-select";
 import DataChart from "./components/DataChart";
 import {
   indicators,
@@ -8,67 +10,55 @@ import {
 } from "./hooks/useWorldBankData";
 
 function App() {
-  // Add state for the selected country, default to Bangladesh (BGD)
-  const [country, setCountry] = useState("BGD");
+  const [countries, setCountries] = useState([
+    { value: "BGD", label: "Bangladesh" },
+  ]);
   const [indicator, setIndicator] = useState("NY.GDP.MKTP.CD");
+  const [yearRange, setYearRange] = useState([1960, 2024]);
 
-  // Fetch the list of countries
   const { data: countryList, isLoading: countriesLoading } = useCountryList();
-
-  // Fetch the main chart data using both country and indicator state
   const { data, isLoading, isError, error } = useWorldBankData(
     indicator,
-    country
+    countries.map((c) => c.value),
+    yearRange[0],
+    yearRange[1]
   );
 
-  // Find the full name of the currently selected country for the title
-  const selectedCountryName =
-    countryList?.find((c) => c.id === country)?.name || "...";
-
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 font-sans p-4 sm:p-8">
+    <div className="min-h-screen bg-gray-900 text-gray-100 font-sans p-4 sm:p-6 md:p-8">
       <main className="max-w-5xl mx-auto">
         <header className="text-center mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">
             World Bank Data Dashboard
           </h1>
-          {/* Make the subtitle dynamic based on the selected country */}
           <p className="text-lg text-gray-400">
-            Visualizing Development Indicators for {selectedCountryName}
+            Visualizing Development Indicators
           </p>
         </header>
 
         <section className="bg-gray-800 p-6 rounded-lg shadow-lg">
-          {/* Controls Container */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            {/* ++ NEW Country Selector ++ */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-6">
             <div>
               <label
                 htmlFor="country-select"
                 className="block mb-2 text-sm font-medium text-gray-300"
               >
-                Select a Country:
+                Select Countries:
               </label>
-              <select
-                id="country-select"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                disabled={countriesLoading} // Disable while loading countries
-                className="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-              >
-                {countriesLoading ? (
-                  <option>Loading countries...</option>
-                ) : (
-                  countryList?.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.name}
-                    </option>
-                  ))
-                )}
-              </select>
+              <Select
+                isMulti
+                options={countryList?.map((c) => ({
+                  value: c.id,
+                  label: c.name,
+                }))}
+                value={countries}
+                onChange={setCountries}
+                isDisabled={countriesLoading}
+                className="basic-multi-select text-black"
+                classNamePrefix="select"
+              />
             </div>
 
-            {/* Indicator Selector (Now includes Health & Education) */}
             <div>
               <label
                 htmlFor="indicator-select"
@@ -89,10 +79,23 @@ function App() {
                 ))}
               </select>
             </div>
+
+            <div className="col-span-2">
+              <label className="block mb-2 text-sm font-medium text-gray-300">
+                Select Year Range:
+              </label>
+              <Slider
+                range
+                min={1960}
+                max={2024}
+                value={yearRange}
+                onChange={setYearRange}
+                className="w-full"
+              />
+            </div>
           </div>
 
-          {/* Chart Area */}
-          <div className="h-[400px]">
+          <div className="h-[300px] sm:h-[400px]">
             {isLoading && (
               <div className="flex items-center justify-center h-full">
                 <p className="text-xl text-gray-400">Loading Chart...</p>
@@ -104,7 +107,12 @@ function App() {
               </div>
             )}
             {!isLoading && !isError && (
-              <DataChart data={data} indicatorName={indicators[indicator]} />
+              <DataChart
+                data={data}
+                indicatorName={indicators[indicator]}
+                countryList={countryList}
+                countries={countries}
+              />
             )}
           </div>
         </section>
