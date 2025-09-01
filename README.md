@@ -43,7 +43,7 @@ The **Globe Analytics- World Bank Data Dashboard** is a React-based web applicat
 
 ## Live link
 
-I will add it later
+[Globe Analytics](https://world-bank-data-dashboard.vercel.app/)
 
 ## Development Flow
 
@@ -67,7 +67,7 @@ I will add it later
 
 - <img src="screenshots/no-data.png" alt="No Data" width="300">
 
-- <img src="screenshots/mobile-view.png" alt="Mobile View" >
+- <img src="screenshots/mobile-view.png" alt="Mobile View" height= '500' >
 
 ## Contributing
 
@@ -81,6 +81,6 @@ This is a personal project, but contributions are welcome! Fork the repo and sub
 
 ## Contact
 
-- GitHub: `[khadija-T](https://github.com/khadija-T)`
-- Email: `[khadija.t20037@gmail.com](mailto:khadija.t20037@gmail.com)`
-- LinkedIn: `[Khadijatull Kobra](https://www.linkedin.com/in/khadijatull-kobra-80b1a9348)`
+- **GitHub**: [khadija-T](https://github.com/khadija-T)
+- **Email**: [khadija.t20037@gmail.com](mailto:khadija.t20037@gmail.com)
+- **LinkedIn**: [Khadijatull Kobra](https://www.linkedin.com/in/khadijatull-kobra-80b1a9348)
