@@ -67,7 +67,7 @@ The **Globe Analytics- World Bank Data Dashboard** is a React-based web applicat
 
 - <img src="screenshots/no-data.png" alt="No Data" width="300">
 
-- <img src="screenshots/mobile-view.png" alt="Mobile View" height= '500' >
+- <img src="screenshots/mobile-view.png" alt="Mobile View"  width="300">
 
 ## Contributing
 
