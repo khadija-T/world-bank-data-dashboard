@@ -28,7 +28,7 @@ The **Globe Analytics- World Bank Data Dashboard** is a React-based web applicat
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/world-bank-data-dashboard.git
+   git clone https://github.com/khadija-T/world-bank-data-dashboard.git
    cd world-bank-data-dashboard
    ```
 2. **Install dependencies**:
